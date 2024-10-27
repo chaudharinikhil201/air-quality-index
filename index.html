@@ -4,10 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IoT Monitor</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Color Theme */
+        :root {
+            --primary-color: #4499FF;
+            --secondary-color: #FFA500;
+            --light-gray: #F3F3F3;
+            --text-color: #333;
+            --card-background: #FFFFFF;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: 700;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        /* Main Content Styling */
+        main {
+            padding: 20px;
+        }
+
+        /* Sensor Grid Styling */
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        /* Sensor Card Styling */
+        .sensor-card {
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sensor-card h2 {
+            font-size: 20px;
+            color: var(--text-color);
+            margin-top: 10px;
+        }
+
+        .sensor-card p {
+            color: var(--text-color);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .icon {
+            font-size: 40px;
+            color: var(--secondary-color);
+        }
+
+        .thermostat-icon:before { content: "🌡️"; }
+        .water-icon:before { content: "💧"; }
+        .pm-icon:before { content: "🌫️"; }
+        .fire-icon:before { content: "🔥"; }
+        .smoke-icon:before { content: "🚬"; }
+        .lpg-icon:before { content: "⚠️"; }
+        .vibration-icon:before { content: "📳"; }
+    </style>
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAnweXxxFV3A3FG5cSKfDf36IpmBoOSpns",
+            authDomain: "iotapp-c7976.firebaseapp.com",
+            databaseURL: "https://iotapp-c7976-default-rtdb.firebaseio.com",
+            projectId: "iotapp-c7976",
+            storageBucket: "iotapp-c7976.appspot.com",
+            messagingSenderId: "147074246516",
+            appId: "1:147074246516:web:495b8a7300906080a26e21"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Reference to your sensor data
+        const dbRef = ref(database, 'sensors/'); // Update the path to your sensors
+
+        // Listen for data changes
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log(data); // Check if data is logged correctly
+            displayData(data);
+        });
+
+        // Function to display data on the web page
+        function displayData(data) {
+            if (data) {
+                document.getElementById('temperature').textContent = `${data.temperature} °C`;
+                document.getElementById('humidity').textContent = `${data.humidity} %`;
+                document.getElementById('pm25').textContent = `${data.pm25} µg/m³`;
+                document.getElementById('fire').textContent = data.fire === 'on' ? 'Yes' : 'No';
+                document.getElementById('smoke').textContent = data.smoke === 'on' ? 'Yes' : 'No';
+                document.getElementById('lpg').textContent = data.lpg === 'on' ? 'Yes' : 'No';
+                document.getElementById('vibration').textContent = data.vibration === 'on' ? 'Yes' : 'No';
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -53,7 +169,5 @@
             </div>
         </section>
     </main>
-
-    <script src="script.js"></script>
 </body>
 </html>
