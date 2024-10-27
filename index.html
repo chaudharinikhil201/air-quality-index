@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+</head>
+<body>
+    <header>
+        <h1>IoT Monitor & Control</h1>
+    </header>
+    
+    <main>
+        <section class="sensor-grid">
+            <div class="sensor-card">
+                <i class="icon thermostat-icon"></i>
+                <p>Temperature</p>
+                <h2 id="temperature">-- °C</h2>
+            </div>
+            <div class="sensor-card">
+                <i class="icon water-icon"></i>
+                <p>Humidity</p>
+                <h2 id="humidity">-- %</h2>
+            </div>
+            <div class="sensor-card">
+                <i class="icon pm-icon"></i>
+                <p>PM2.5</p>
+                <h2 id="pm25">-- µg/m³</h2>
+            </div>
+            <div class="sensor-card">
+                <i class="icon fire-icon"></i>
+                <p>Fire</p>
+                <h2 id="fire">No</h2>
+            </div>
+            <div class="sensor-card">
+                <i class="icon smoke-icon"></i>
+                <p>Smoke</p>
+                <h2 id="smoke">No</h2>
+            </div>
+            <div class="sensor-card">
+                <i class="icon lpg-icon"></i>
+                <p>LPG Leakage</p>
+                <h2 id="lpg">No</h2>
+            </div>
+            <div class="sensor-card">
+                <i class="icon vibration-icon"></i>
+                <p>Vibration</p>
+                <h2 id="vibration">No</h2>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
